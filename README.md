@@ -1,12 +1,23 @@
 # Exercício-C114-Eng.-de-Software
 
-Caso a porta HOST esteja ocupada, feche todos os processos que estiverem rodando na porta via terminal de comando.
-Para isso realize a seguinte processo 
-Mostra todos os processos rodando na porta:
-- netstat -ano | findstr : <PORTA>
+## Execução do Client-Servidor TCP 
 
-Encerra um determinado processo:
-- taskkill /PID <PID> /F
+1. Inicie o servidor executando o arquivo Servidor.py.
 
-<PORTA> Número da porta utilizada (65432)
-<PID> Número do processo a ser fechado
+2. Em seguida, em um terminal separado, execute o arquivo main.py.
+
+## Solução de Conflitos com a Porta (HOST)
+
+Caso a porta especificada (ex.: 65432) já esteja em uso por outro processo, será necessário encerrá-lo manualmente para liberar o recurso. Siga os passos abaixo via terminal:
+
+1. Identifique os processos utilizando a porta:
+
+netstat -ano | findstr :65432
+
+Isso exibirá o PID (Process ID) de qualquer processo ativo na porta 65432
+
+2. Encerre o processo correspondente:
+
+taskkill /PID <PID> /F
+
+Substitua <PID> pelo número retornado no passo anterior.
