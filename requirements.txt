@@ -1,0 +1,4 @@
+# requirements.txt
+
+# Versão mínima do Python usada no projeto
+python>=3.8
