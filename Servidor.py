@@ -1,39 +1,17 @@
-import socket
+
+from modulos.horario import Horario
+from modulos.modulo_servidor import ModuloServidor
 import json
 
-# Definição do host e porta
-HOST = '127.0.0.1'
-PORT = 65432
+def servidor():
+    # Instanciando o gerador de dados
+    dados_horario = Horario()
+    json_response = dados_horario.to_json_string    #JSON a ser enviado via servidor
 
-horarios = {
-    "nomeDoProfessor": "Prof. Christopher",
-    "horarioDeAtendimento": "Seg 17:30 - 19:10",
-    "periodo": "integral",
-    "sala": "5",
-    "predio": "1"
-},{
-    "nomeDoProfessor": "Prof. Jonas",
-    "horarioDeAtendimento": "Ter 19:30 - 21:10",
-    "periodo": "noturno",
-    "sala": "3",
-    "predio": "14"
-}
+    # Iniciando o servidor
+    servidor = ModuloServidor(host='127.0.0.1', port=65432)
+    servidor.socket_init()
+    servidor.envia_pacote(json_response)
 
-# JSON que será enviado como resposta
-json_response = json.dumps(horarios)
-
-# Criando o socket do servidor (IPv4, TCP)
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_socket.bind((HOST, PORT))
-server_socket.listen()
-
-print(f"Servidor rodando em {HOST} : {PORT}...")
-
-while True:
-    conn, addr = server_socket.accept()  # Aguarda conexão de um cliente
-    print(f"Conexão recebida de {addr}")
-
-    conn.sendall(json_response.encode())  # Envia o JSON como string
-    print("JSON enviado!")
-
-    conn.close()  # Fecha a conexão
+if __name__ == "__main__":
+    servidor()
